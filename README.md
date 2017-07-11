@@ -6,7 +6,7 @@ R-ArcGIS Bridge and the Microsoft DSVM
 
 **[View the Slides](https://4326.us/esri/r-ms-uc-2017/)**
 
-**[Download High Quality Version (PDF, 4MB)](uc-2017-r-ms-full.pdf)**
+**[Download High Quality Version (PDF, 4MB)](http:s//4326.us/esri/r-ms-uc-2017/uc-2017-r-ms-full.pdf)**
 
 Building
 --------
