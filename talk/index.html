@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="reveal.js/favicon.ico">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Shaun Walbridge">
+  <title>R-ArcGIS Bridge and the Microsoft DSVM</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="reveal.js/css/theme/esri-uc-2017.css" id="theme">
+  <link rel="stylesheet" href="./src/uc-2017.css"/>
+
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="reveal.js/lib/css/solarized_dark.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section data-background="images/title.png" class="title">
+  <h1 class="title">R-ArcGIS Bridge and the Microsoft DSVM</h1>
+  <h2 class="author">Shaun Walbridge</h2>
+</section>
+
+<section class="slide level2">
+
+<section data-background="images/title.png">
+<h2>
+<a href="https://github.com/scw/r-ms-uc-2017" class="uri">https://github.com/scw/r-ms-uc-2017</a>
+</h2>
+<h3>
+<a href="https://4326.us/esri/r-ms-uc-2017/uc-2017-r-ms-full.pdf">High Quality PDF (2MB)</a>
+</h3>
+</section>
+</section>
+<section id="related-sessions" class="slide level2" data-background="images/title.png">
+<h2>Related Sessions</h2>
+<ul>
+<li><a href="https://userconference2017.schedule.esri.com/schedule/345927268">Data Science Made Easy in ArcGIS Using Python and R</a>
+<ul>
+<li>Tomorrow, 8:30–9:45a, Room 07 A</li>
+<li>ArcGIS + Python + R + Jupyter Notebooks for analysis</li>
+</ul></li>
+<li><a href="https://userconference2017.schedule.esri.com/schedule/1087523793">Bridging the Gap: Integrating R and ArcGIS for Advanced Analysis</a>
+<ul>
+<li>Tomorrow, 10:00–10:30a, Tech Theater 17</li>
+<li><strong>Deeper dive</strong> into using R with ArcGIS</li>
+</ul></li>
+</ul>
+</section>
+<section><section id="data-science" class="titleslide slide level1" data-background="images/bg-1.png"><h1>Data Science</h1></section><section id="data-science-languages" class="slide level2" data-background="images/bg-1.png">
+<h2>Data Science Languages</h2>
+<ul>
+<li><img src="images/logos/Python_64x64.png" class="tight" style="width:32px" /> Python (SciPy stack, Jupyter, scikit-learn, …)</li>
+<li>C++ (CNTK, Tensorflow)</li>
+<li><img src="images/logos/R_64x64.png" class="tight" style="width:32px" /> <strong>R</strong> (<a href="https://cran.r-project.org/web/views/MachineLearning.html">AI task view</a>)</li>
+<li>Many workflows require combining components from multiple environments</li>
+</ul>
+</section><section id="section" class="slide level2" data-background="images/bg-1.png">
+<h2><span style="display: none">.</span> <img src="images/logos/conda-logo.png" class="tight" /></h2>
+<ul>
+<li><a href="https://continuum.io">Continuum Analtyics</a> — open data science company</li>
+<li>Initially Python — expanded to many languages</li>
+<li><p>Supported in:</p>
+<ul>
+<li>ArcGIS Pro 1.3+</li>
+<li>Microsoft DSVM</li>
+</ul></li>
+</ul>
+</section><section id="conda-in-arcgis-pro" class="slide level2" data-background="images/bg-1.png">
+<h2>Conda in ArcGIS Pro</h2>
+<p><span style="display:none">.</span> <img src="images/conda-in-pro.png" class="tight" /></p>
+</section><section id="scipy-in-arcgis" class="slide level2" data-background="images/bg-1.png">
+<h2>SciPy in ArcGIS</h2>
+<p><span style="display:none">.</span> <img src="images/stack-circle.png" class="tight" style="margin-top: -150px" /></p>
+</section><section id="arcpy" class="slide level2" data-background="images/bg-1.png">
+<h2>ArcPy</h2>
+<ul>
+<li>Python module for accessing all the capabilities of ArcGIS Pro from within Python</li>
+<li>Chaining tools together, form models and scripts</li>
+<li>Primary mechanism for extending the software for desktop users</li>
+</ul>
+</section><section id="arcgis-api-for-python" class="slide level2" data-background="images/bg-1.png">
+<h2>ArcGIS API for Python</h2>
+<ul>
+<li>Jupyter: Python, R and remote data sources</li>
+</ul>
+<p><span style="display:none">.</span> <img src="images/python-api-jupyter.png" class="tight" /></p>
+</section></section>
+<section><section id="r" class="titleslide slide level1" data-background="images/bg-1.png"><h1>R</h1></section><section id="esri-and" class="slide level2" data-background="images/bg-1.png">
+<h2>Esri and <img src="images/logos/R_logo.svg.png" class="tight" style="width: 96px" />?</h2>
+<ul>
+<li>Integration via ArcGIS–R bridge, last two years</li>
+<li>Joined <a href="https://www.r-consortium.org/">R Consortium</a> and <a href="https://www.r-project.org/foundation">R Foundation</a></li>
+</ul>
+</section><section id="why" class="slide level2" data-background="images/bg-1.png">
+<h2>Why <img src="images/logos/R_logo.svg.png" class="tight" style="width: 96px" />?</h2>
+<ul>
+<li>Powerful core data structures and operations
+<ul>
+<li>Data frames, functional programming</li>
+</ul></li>
+<li>Unparalleled breadth of statistical routines
+<ul>
+<li>The <em>de facto</em> language of Statisticians</li>
+</ul></li>
+<li><code>CRAN</code>: 6400 packages for solving problems</li>
+<li>Versatile and powerful plotting</li>
+</ul>
+</section></section>
+<section><section id="r-arcgis-bridge" class="titleslide slide level1" data-background="images/intro-bg.jpg"><h1>R — ArcGIS Bridge</h1></section><section id="r-arcgis-bridge-1" class="slide level2" data-background="images/bg-1.png">
+<h2>R — ArcGIS Bridge</h2>
+<p><span style="display:none">.</span> <img src="images/r-pyramid.png" class="tight" /></p>
+</section><section id="r-arcgis-bridge-2" class="slide level2" data-background="images/bg-1.png">
+<h2>R — ArcGIS Bridge</h2>
+<figure>
+<img src="images/connect.png" style="border: none" />
+</figure>
+<ul>
+<li>ArcGIS developers can <em>create tools and toolboxes</em> that integrate ArcGIS and R</li>
+<li>ArcGIS users can <em>access R</em> code through geoprocessing scripts</li>
+<li>R users can <em>access organizations GIS’ data</em>, managed in traditional GIS ways</li>
+</ul>
+<p><a href="https://r-arcgis.github.io/">https://r-arcgis.github.io</a></p>
+</section><section id="r-arcgis-bridge-3" class="slide level2" data-background="images/bg-1.png">
+<h2>R — ArcGIS Bridge</h2>
+<ul>
+<li>Store data with ArcGIS, access it in R, return R objects back to ArcGIS native data types (e.g. geodatabase feature classes)</li>
+<li>Knows how to convert spatial data to <code>sp</code> objects, R native spatial data type</li>
+</ul>
+</section><section id="building-r-script-tools" class="slide level2" data-background="images/bg-1.png">
+<h2>Building R Script Tools</h2>
+<figure>
+<img src="images/r-toolbox-crop.png" class="tight" style="height:32px" />
+</figure>
+<figure>
+<img src="images/semipar-parameters.png" style="height:500px;" />
+</figure>
+</section><section id="r-demo" class="slide level2" data-background="images/bg-1.png">
+<h2>R: Demo</h2>
+</section><section id="whats-next" class="slide level2" data-background="images/bg-1.png">
+<h2>What’s next?</h2>
+<ul>
+<li>Raster support (come see it in action tomorrow)</li>
+<li>Simple features (<code>sf</code> package)</li>
+<li>Scaling with Azure</li>
+</ul>
+</section></section>
+<section><section id="dsvm-integration" class="titleslide slide level1" data-background="images/bg-1.png"><h1>DSVM Integration</h1></section><section id="dsvm-integration-1" class="slide level2" data-background="images/bg-1.png">
+<h2>DSVM Integration</h2>
+<ul>
+<li>ArcGIS Pro in Azure</li>
+<li>Data Science and Deep Learning machines (high performance)</li>
+<li>A <em>unified environment</em> for AI problem solving —</li>
+<li>Provides an in-depth solution – the latest data science code, Microsoft’s Cognitive Toolkit (CNTK), ArcGIS Pro, ArcPy, R-ArcGIS Bridge, and Microsoft R Open</li>
+</ul>
+</section><section id="dsvm-integration-2" class="slide level2" data-background="images/bg-1.png">
+<h2>DSVM Integration</h2>
+<ul>
+<li>We’re excited to see how this can be used. The great work that the Chesapeake Conservancy is doing, extended to your own projects</li>
+<li>R-ArcGIS bridge works seamlessly with Microsoft R Open</li>
+<li>Shared Backbone of Conda (Continuum Analytics) to create a consistent environment for analysis</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+        // Display a presentation progress bar
+        progress: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
