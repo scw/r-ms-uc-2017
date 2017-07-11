@@ -3,7 +3,7 @@
 
 <section data-background="images/title.png">
 <h2>[https://github.com/scw/r-ms-uc-2017](https://github.com/scw/r-ms-uc-2017)</h2>
-<h3>[High Quality PDF (2MB)](https://4326.us/esri/r-ms-uc-2017/uc-2017-r-ms-full.pdf)</h3>
+<h3>[High Quality PDF (2MB)](https://4326.us/esri/r-ms-uc-2017/uc-2017-r-full.pdf)</h3>
 </section>
 
 Related Sessions {data-background="images/title.png"}
